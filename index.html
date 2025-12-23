@@ -1,1 +1,23 @@
 <h1>DontTube</h1>
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDw_vzHBjeM0G4UyIYRUGvCuK3KZF0QGO0",
+  authDomain: "donttube-9747d.firebaseapp.com",
+  projectId: "donttube-9747d",
+  storageBucket: "donttube-9747d.firebasestorage.app",
+  messagingSenderId: "562792235190",
+  appId: "1:562792235190:web:f313b9da9e9dfd815a2617",
+  measurementId: "G-TPRHZM4JPJ"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
