@@ -1,11 +1,113 @@
 <h1>DontTube</h1>
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDw_vzHBjeM0G4UyIYRUGvCuK3KZF0QGO0",
-  authDomain: "donttube-9747d.firebaseapp.com",
-  projectId: "donttube-9747d",
-  storageBucket: "donttube-9747d.firebasestorage.app",
-  messagingSenderId: "562792235190",
-  appId: "1:562792235190:web:f313b9da9e9dfd815a2617",
-  measurementId: "G-TPRHZM4JPJ"
-};
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>DontTube — русская версия YouTube</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: white;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 25px;
+      background: #000;
+      border-bottom: 2px solid orange;
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: orange;
+      border-radius: 12px;
+    }
+
+    .login-btn {
+      background: orange;
+      color: black;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .main {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ШАПКА -->
+  <header>
+    <div class="logo">DontTube</div>
+    <button class="login-btn" onclick="loginWithGoogle()">Войти через Google</button>
+  </header>
+
+  <!-- ГЛАВНАЯ -->
+  <div class="main">
+    <h1>Добро пожаловать в DontTube</h1>
+    <p>Русская версия YouTube без VPN</p>
+
+    <div id="userInfo" class="hidden">
+      <p id="userName"></p>
+      <img id="userPhoto" width="80" style="border-radius:50%">
+    </div>
+  </div>
+
+  <!-- FIREBASE -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+
+    // 🔴 ВСТАВЬ СЮДА СВОЙ КОНФИГ
+    const firebaseConfig = {
+      apiKey: "AIzaSyDw_vzHBjeM0G4UyIYRUGvCuK3KZF0QGO0",
+      authDomain: "donttube-9747d.firebaseapp.com",
+      projectId: "donttube-9747d",
+      storageBucket: "donttube-9747d.firebasestorage.app",
+      messagingSenderId: "562792235190",
+      appId: "1:562792235190:web:f313b9da9e9dfd815a2617",
+      measurementId: "G-TPRHZM4JPJ"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    window.loginWithGoogle = function () {
+      signInWithPopup(auth, provider)
+        .then((result) => {
+          const user = result.user;
+
+          document.getElementById("userInfo").classList.remove("hidden");
+          document.getElementById("userName").innerText =
+            "Ты вошёл как: " + user.displayName;
+          document.getElementById("userPhoto").src = user.photoURL;
+        })
+        .catch((error) => {
+          alert("Ошибка входа");
+          console.error(error);
+        });
+    };
+  </script>
+
+</body>
+</html>
+
